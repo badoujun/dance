@@ -14,9 +14,4 @@ class User {
         $model = new UserModel();
         return $model->findUser($phone,$pwd);
     }
-
-    public function test1($phone,$pwd) {
-        $model = new UserModel();
-        return $model->findUser($phone,$pwd);
-    }
 }
