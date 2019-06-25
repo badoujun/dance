@@ -24,7 +24,6 @@ class Token{
     }
 
     public static function checkToken($token) {
-        $userId = 0;
         $signer = new Sha256();
         $Parser = new Parser();
         $token = $Parser->parse((string) $token);
@@ -35,8 +34,9 @@ class Token{
         $data->setId('001126');
 
         if($token->validate($data) && $token->verify($signer, 'testing')){
-            $userId = $token->getClaim('userId');
+            return $token->getClaim('userId');
+        }else{
+            throw new ResultException('签名已过期', 3);
         }
-        return $userId;
     }
 }
