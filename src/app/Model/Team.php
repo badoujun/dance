@@ -1,10 +1,10 @@
 <?php
 namespace App\Model;
 
-class User extends BaseModel {
+class Team extends BaseModel {
 
     protected function getTableName($id) {
-        return 'user';
+        return 'team';
     }
 
 }

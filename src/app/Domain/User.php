@@ -8,18 +8,18 @@ class User {
     public function signUp($phone,$pwd) {
         $data = array('phone' => $phone, 'pwd' => $pwd);
         $model = new UserModel();
-        return $model->addUser($data);
+        return $model->add($data);
     }
 
     public function signIn($phone,$pwd) {
         $data = array('phone' => $phone, 'pwd' => $pwd);
         $model = new UserModel();
-        return $model->findUser($data);
+        return $model->find($data);
     }
 
     public function findUser($phone) {
         $data = array('phone' => $phone);
         $model = new UserModel();
-        return $model->findUser($data);
+        return $model->find($data);
     }
 }
