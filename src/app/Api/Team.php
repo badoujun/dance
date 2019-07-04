@@ -45,6 +45,16 @@ class Team extends Api {
                 'pageNum' => array('name' => 'pageNum', 'require' => false, 'default' => 1, 'desc' => '页码'),
                 'pageSize' => array('name' => 'pageSize', 'require' => false, 'default' => 10, 'desc' => '每页条数'),
             ),
+            'joinTeam' => array(
+                'token' => array('name' => 'token', 'require' => true, 'desc' => 'Token密匙'),
+                'teamId' => array('name' => 'teamId', 'require' => true, 'desc' => '团队ID'),
+            ),
+            'findTeamJoin' => array(
+                'token' => array('name' => 'token', 'require' => true, 'desc' => 'Token密匙'),
+                'teamId' => array('name' => 'teamId', 'require' => false, 'desc' => '团队ID'),
+                'pageNum' => array('name' => 'pageNum', 'require' => false, 'default' => 1, 'desc' => '页码'),
+                'pageSize' => array('name' => 'pageSize', 'require' => false, 'default' => 10, 'desc' => '每页条数'),
+            ),
         );
     }
 
@@ -122,4 +132,41 @@ class Team extends Api {
 
         return $teamList;
     }
+
+    /**
+     * 加入团队
+     * @desc 申请加入团队
+     */
+    public function joinTeam() {
+        //入参
+        $token = $this->token;
+        $teamId = $this->teamId;
+        //验证token
+        $userId = Token::checkToken($token);
+        //查询
+        $teamDomain = new TeamDomain();
+        $insert_id = $teamDomain->joinTeam($userId,$teamId);
+
+        return $teamDomain->findTeamJoinById($insert_id);
+    }
+
+    /**
+     * 我的申请记录
+     * @desc 查询我的申请记录
+     */
+    public function findTeamJoin() {
+        //入参
+        $token = $this->token;
+        $teamId = $this->teamId;
+        $pageNum = $this->pageNum;
+        $pageSize = $this->pageSize;
+        //验证token
+        $userId = Token::checkToken($token);
+        //查询
+        $teamDomain = new TeamDomain();
+        $teamJoinList = $teamDomain->findTeamJoin($userId,$teamId,null,$pageNum,$pageSize);
+
+        return $teamJoinList;
+    }
+
 } 
